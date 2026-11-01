@@ -11,22 +11,10 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListene
 mm.add({ motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 701px)' }, (context) => {
   const { motion, desktop } = context.conditions;
   if (!motion) { gsap.set('.reveal, .reveal-hero', { autoAlpha: 1, y: 0 }); return; }
-  const nameCharacters = [];
-  document.querySelectorAll('.reveal-word').forEach((word) => {
-    const letters = [...word.textContent];
-    word.textContent = '';
-    letters.forEach((letter) => {
-      const character = document.createElement('span');
-      character.className = 'name-character';
-      character.textContent = letter;
-      word.appendChild(character);
-      nameCharacters.push(character);
-    });
-  });
   const intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
   intro.from('.nav', { y: -30, autoAlpha: 0, duration: .7 })
     .from('.hero-meta', { y: 14, autoAlpha: 0, duration: .6 }, '-=.3')
-    .from(nameCharacters, { yPercent: 110, autoAlpha: 0, duration: .42, stagger: .055 }, '-=.3')
+    .from('.reveal-word', { y: 30, autoAlpha: 0, duration: .7, stagger: .12 }, '-=.3')
     .from('.reveal-hero', { y: 35, autoAlpha: 0, duration: .8, stagger: .13 }, '-=.25');
   gsap.to('.orbit-one', { rotation: 80, y: 100, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 } });
   gsap.to('.hero-portrait img', { yPercent: 7, scale: 1.035, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 } });
